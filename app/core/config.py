@@ -1,15 +1,20 @@
 from functools import lru_cache
 
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import URL
 
-# 读取数据库配置
+# 应用配置
 class Settings(BaseSettings):
     db_host: str = "localhost"
     db_port: int = 3306
     db_user: str
     db_password: str
     db_name: str
+
+    dashscope_api_key: SecretStr
+    dashscope_base_url: str
+    dashscope_model: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
