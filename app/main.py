@@ -6,6 +6,7 @@ from app.api.plants import router as plants_router
 from app.db.session import get_db
 from sqlalchemy.orm import Session
 from sqlalchemy import text
+from app.api.rag import router as rag_router
 
 app = FastAPI(
     title="La Maison Jungle API",
@@ -37,6 +38,7 @@ app.mount(
 
 # 把 app/api/plants.py 中定义的接口加入主应用
 app.include_router(plants_router)
+app.include_router(rag_router)
 
 @app.get("/")
 def root():
@@ -55,3 +57,4 @@ def health_check(
         "status": "ok",
         "database": "connected",
     }
+

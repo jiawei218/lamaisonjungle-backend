@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -16,8 +17,22 @@ class Settings(BaseSettings):
     dashscope_base_url: str
     dashscope_model: str
 
+#RAG
+    path_md5_file:str
+    chroma_collection_name:str
+    chroma_embedding_model: str
+    chroma_persist_directory: str
+    search_kwargs:int = 2
+
+    #spliter
+    chunk_size :int = 550
+    chunk_overlap:int = 50
+    separators: list[str] = ["\n\n", "\n", ".", "!", "?", "。", "！", "？", " ", ""]
+    max_spliter_char_number:int = 300
+
+
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=Path(__file__).resolve().parents[2] / ".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
